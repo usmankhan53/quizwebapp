@@ -1,0 +1,176 @@
+/* Dashboard.module.css */
+
+.dashboard {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.greeting {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.dashboard-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dashboard-button:hover {
+  background-color: rgba(139, 0, 0, 0.397);
+}
+
+.total-score {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.total-score h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.total-score div {
+  font-size: 36px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.note {
+  background-color: #ffc107;
+  color: #333;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 100%; /* Ensure note does not exceed parent width */
+  overflow-wrap: break-word; /* Wrap text if it exceeds note width */
+}
+
+.quiz-scores {
+  margin-bottom: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 3px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.no-results {
+  margin-top: 10px;
+  color: #dc3545;
+  font-style: italic;
+}
+
+.loading {
+  margin-top: 20px;
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination .page-item {
+  margin: 0 5px;
+}
+
+
+.pagination .page-link {
+  display: block;
+  padding: 8px 16px;
+  background-color: #ddd;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background-color: #dddddd90;
+}
+
+.page-link.active {
+  background-color: darkred;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .buttons {
+    margin-top: 10px;
+  }
+
+  .dashboard-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .total-score div {
+    font-size: 28px;
+  }
+}
