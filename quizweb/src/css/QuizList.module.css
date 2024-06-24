@@ -170,16 +170,13 @@
   .dashboard-link {
     padding: 8px 16px;
   }
-}
 
-@media (max-width: 320px) {
-
-
- 
   .category-select {
-    font-size: 8.5px;
-    
+    font-size: 12px;
+    max-width: 100%; /* Ensure it takes up maximum available width */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+    width: calc(100% - 22px); /* Adjust width to prevent overflow */
+    margin-right: 10px; /* Add margin if necessary */
   }
-
-  
 }
+

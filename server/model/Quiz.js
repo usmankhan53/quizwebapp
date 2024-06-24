@@ -14,6 +14,9 @@ const quizSchema = new mongoose.Schema({
   questions: [
     {
       question: String,
+      inputType: String,
+      language: String,
+      codeSnippet: String,
       options: [String],
       answer: Number,
     },

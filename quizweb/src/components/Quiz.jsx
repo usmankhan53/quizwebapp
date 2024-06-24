@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import UsernameModal from './UsernameModal'
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { darcula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import UsernameModal from './UsernameModal';
 import '../css/Quiz.css'; // Import the CSS file for styling
 
 function Quiz() {
@@ -14,6 +16,7 @@ function Quiz() {
   const [quizStarted, setQuizStarted] = useState(false); // State to track if quiz has started
   const [loading, setLoading] = useState(true); // State to track loading status
   const [showUsernameModal, setShowUsernameModal] = useState(false); // State to show UsernameModal
+  const [userAnswers, setUserAnswers] = useState([]); // State to store user answers
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -34,8 +37,7 @@ function Quiz() {
     fetchQuiz();
   }, [id, navigate]);
 
-
-    // Check if username exists in local storage upon component mount
+  // Check if username exists in local storage upon component mount
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
     if (!storedUsername) {
@@ -53,7 +55,7 @@ function Quiz() {
         setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
 
-      return () => clearInterval(countdown);
+      return () => clearInterval(countdown); // Clear interval on cleanup
     }
   }, [currentQuestionIndex, quizStarted]);
 
@@ -70,10 +72,13 @@ function Quiz() {
   };
 
   const handleNextQuestion = () => {
+    const updatedAnswers = [...userAnswers, selectedOption];
+    setUserAnswers(updatedAnswers);
+
     if (!quizData || currentQuestionIndex >= quizData.questions.length - 1) {
       // If quizData is null or at the end of questions array, navigate to result
-      const score = quizData.questions.reduce(
-        (acc, question, index) => (selectedOption === question.answer ? acc + 1 : acc),
+      const score = updatedAnswers.reduce(
+        (acc, answer, index) => (answer === quizData.questions[index].answer ? acc + 1 : acc),
         0
       );
       navigate(`/result?score=${score}&totalQuestions=${quizData.questions.length}&title=${quizData.title}`);
@@ -84,12 +89,16 @@ function Quiz() {
   };
 
   const startQuiz = () => {
-    setQuizStarted(true);
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setQuizStarted(true);
+    } else {
+      setShowUsernameModal(true); // Show UsernameModal if no username found
+    }
   };
 
-
-   // Function to handle username submission
-   const handleUsernameSubmit = async (username) => {
+  // Function to handle username submission
+  const handleUsernameSubmit = async (username) => {
     try {
       // Send username to backend API
       const response = await fetch('https://quizwebbackend.vercel.app/user', {
@@ -135,7 +144,15 @@ function Quiz() {
       {quizStarted && (
         <div className="question-container">
           <p className="question-text">
-            <strong>Question {currentQuestionIndex + 1}:</strong> {quizData.questions[currentQuestionIndex].question}
+            <strong>Question {currentQuestionIndex + 1}:</strong>  {quizData.questions[currentQuestionIndex].question}
+            
+            {quizData.questions[currentQuestionIndex].inputType === 'code' ? (
+              <SyntaxHighlighter language={quizData.questions[currentQuestionIndex].language} style={darcula}>
+                {quizData.questions[currentQuestionIndex].codeSnippet}
+              </SyntaxHighlighter>
+            ) : (
+              ""
+            )}
           </p>
           <div className="options-container">
             {quizData.questions[currentQuestionIndex].options.map((option, index) => (
