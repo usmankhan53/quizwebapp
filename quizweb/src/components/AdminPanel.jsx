@@ -101,7 +101,7 @@ function AdminPanel() {
 
   const handleSaveQuiz = async () => {
     try {
-      const response = await fetch(`http://localhost:8001/quiz`, {
+      const response = await fetch(`https://quizwebbackend.vercel.app/quiz`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
