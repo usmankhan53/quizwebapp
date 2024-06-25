@@ -141,13 +141,16 @@ function QuizList() {
       {!isLoading && (
         <div>
           {currentQuizzes.length === 0 ? (
-            <p className={styles['no-results-message']}>No quizzes found. Please try a different search term or category.</p>
+            <p className={styles['no-results-message']}>No quizzes created yet</p>
           ) : (
             <ul className={styles['quiz-list']}>
               {currentQuizzes.map((quiz) => (
                 <li key={quiz._id} className={styles['quiz-item']}>
                   <Link to={`/quiz/${quiz._id}`} className={styles['quiz-link']}>
                     {quiz.title}
+                    <span className={styles['question-count']}>
+                      {quiz.questions.length} {quiz.questions.length === 1 ? 'question' : 'questions'}
+                    </span>
                   </Link>
                 </li>
               ))}

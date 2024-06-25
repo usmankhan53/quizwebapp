@@ -1,5 +1,4 @@
-/* QuizList.module.css */
-
+/* General Styles */
 .quiz-list-container {
   max-width: 800px;
   margin: 0 auto;
@@ -15,7 +14,7 @@
   text-align: center;
   color: white;
   padding: 10px;
-  border-radius: 30px;
+  border-radius: 10px;
   background-color: darkred;
 }
 
@@ -62,10 +61,22 @@
   color: #333;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  position: relative;
 }
 
 .quiz-link:hover {
   background-color: #e0e0e0;
+}
+
+.question-count {
+  font-size: 14px;
+  color: white;
+  background-color: rgb(184, 68, 77);
+  border-radius: 4px;
+  padding: 2px 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .create-quiz-link,
@@ -154,6 +165,7 @@
   color: white;
 }
 
+/* Responsive Styles */
 @media (max-width: 600px) {
   .quiz-list-container {
     padding: 10px;
@@ -178,5 +190,14 @@
     width: calc(100% - 22px); /* Adjust width to prevent overflow */
     margin-right: 10px; /* Add margin if necessary */
   }
-}
 
+  .quiz-link {
+    padding: 10px 5px; /* Adjust padding for small screens */
+  }
+
+  .question-count {
+    font-size: 12px; /* Adjust font size for small screens */
+    top: 5px;
+    right: 5px;
+  }
+}
