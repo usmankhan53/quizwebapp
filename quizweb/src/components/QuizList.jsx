@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../css/QuizList.module.css'; // Adjust the path as per your project structure
+import styles from '../css/QuizList.module.css';
 import UsernameModal from './UsernameModal';
 
 function QuizList() {
@@ -12,7 +12,7 @@ function QuizList() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [quizzesPerPage] = useState(5); // Number of quizzes per page
+  const [quizzesPerPage] = useState(5);
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -58,6 +58,7 @@ function QuizList() {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page on search
   };
 
   const handleUsernameSubmit = async (username) => {
@@ -87,8 +88,16 @@ function QuizList() {
       (!selectedCategory || quiz.category === selectedCategory)
   );
 
+  useEffect(() => {
+    // Update the currentPage if necessary when filteredQuizzes changes
+    if (filteredQuizzes.length < (currentPage - 1) * quizzesPerPage) {
+      setCurrentPage(1);
+    }
+  }, [filteredQuizzes, currentPage, quizzesPerPage]);
+
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
+    setCurrentPage(1); // Reset to first page on category change
   };
 
   const indexOfLastQuiz = currentPage * quizzesPerPage;
@@ -101,6 +110,11 @@ function QuizList() {
   for (let i = 1; i <= Math.ceil(filteredQuizzes.length / quizzesPerPage); i++) {
     pageNumbers.push(i);
   }
+
+  const visiblePageNumbers = pageNumbers.slice(
+    Math.max(currentPage - 2, 0),
+    Math.min(currentPage + 2, pageNumbers.length)
+  );
 
   return (
     <div className={styles['quiz-list-container']}>
@@ -141,7 +155,7 @@ function QuizList() {
       {!isLoading && (
         <div>
           {currentQuizzes.length === 0 ? (
-            <p className={styles['no-results-message']}>No quizzes created yet</p>
+            <p className={styles['no-results-message']}>No quiz found</p>
           ) : (
             <ul className={styles['quiz-list']}>
               {currentQuizzes.map((quiz) => (
@@ -159,7 +173,17 @@ function QuizList() {
 
           {/* Pagination */}
           <ul className={styles['pagination']}>
-            {pageNumbers.map(number => (
+            {currentPage > 1 && (
+              <li className={styles['page-item']}>
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  className={styles['page-link']}
+                >
+                  &laquo;
+                </button>
+              </li>
+            )}
+            {visiblePageNumbers.map(number => (
               <li key={number} className={styles['page-item']}>
                 <button
                   onClick={() => paginate(number)}
@@ -169,6 +193,16 @@ function QuizList() {
                 </button>
               </li>
             ))}
+            {currentPage < pageNumbers.length && (
+              <li className={styles['page-item']}>
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+                  className={styles['page-link']}
+                >
+                  &raquo;
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       )}

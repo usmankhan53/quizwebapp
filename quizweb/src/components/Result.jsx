@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../css/Result.css'; // Import the CSS file for styling
+import styles from '../css/Result.module.css'; // Import the CSS module
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -9,9 +9,9 @@ function useQuery() {
 function Result() {
   const query = useQuery();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true); // State to track loading status
-  const score = parseInt(query.get('score')); // Parse score as integer
-  const totalQuestions = parseInt(query.get('totalQuestions')); // Parse totalQuestions as integer
+  const [loading, setLoading] = useState(true);
+  const score = parseInt(query.get('score'));
+  const totalQuestions = parseInt(query.get('totalQuestions'));
   const title = query.get('title');
   const [username, setUsername] = useState('');
 
@@ -20,15 +20,13 @@ function Result() {
     if (storedUsername) {
       setUsername(storedUsername);
     } else {
-      // Handle case where username is not found in localStorage
       console.error('Username not found in localStorage');
     }
   }, []);
 
   useEffect(() => {
-    if (!username) return; // Don't proceed if username is not available
+    if (!username) return;
 
-    // Prepare data for API call
     const data = {
       title,
       score,
@@ -49,11 +47,9 @@ function Result() {
           throw new Error('Failed to update quiz results');
         }
 
-        // Handle success if needed
         console.log('Quiz results updated successfully');
       } catch (error) {
         console.error('Error updating quiz results:', error);
-        // Handle error as needed
       }
     };
 
@@ -63,45 +59,52 @@ function Result() {
   useEffect(() => {
     // Simulate loading for 2 seconds
     const timer = setTimeout(() => {
-      setLoading(false); // Set loading to false after 2 seconds
+      setLoading(false);
     }, 2000); // 2 seconds
 
     return () => clearTimeout(timer); // Clean up timer on unmount
   }, []);
 
-  // Determine emoji based on score
   let emoji;
   if (score === 0) {
-    emoji = '😞'; // Sad face emoji
+    emoji = '😞';
   } else if (score < totalQuestions / 2) {
-    emoji = '😐'; // Neutral face emoji
+    emoji = '😐';
   } else {
-    emoji = '😄'; // Happy face emoji
+    emoji = '😄';
   }
 
   const handleGoBack = () => {
-    navigate('/'); // Navigate back to the home page
+    navigate('/');
   };
 
   if (loading) {
     return (
-      <div className="result-container">
-        <div className="loading-spinner"></div>
+      <div className={styles.resultContainer}>
+        <div className={styles.loadingSpinner}></div>
         <p>Loading...</p>
       </div>
     );
   }
 
+  const progress = (score / totalQuestions) * 100;
+
   return (
-    <div className="result-container">
-      <h2 className="result-title">Quiz Result {emoji}</h2>
-      <p className="result-score">
+    <div className={styles.resultContainer}>
+      <h2 className={styles.resultTitle}>Quiz Result {emoji}</h2>
+      <div
+        className={styles.progressCircle}
+        style={{ '--progress': progress }}
+      >
+        {Math.round(progress)}%
+      </div>
+      <p className={styles.resultScore}>
         Your score: {score}
       </p>
-      <p className="result-summary">
+      <p className={styles.resultSummary}>
         You Got {score} out of {totalQuestions} questions.
       </p>
-      <button className="back-button" onClick={handleGoBack}>Go Back Home</button>
+      <button className={styles.backButton} onClick={handleGoBack}>Go Back Home</button>
     </div>
   );
 }

@@ -56,11 +56,7 @@ function Dashboard() {
           setLoading(false); // Set loading to false in case of error
         });
     }
-  }, []);
-
-  if (!userData) {
-    return <div className={styles.dashboard}>Loading...</div>;
-  }
+  }, []); // Dependency array is empty, so this runs only once after the initial render
 
   // Filter quizzes based on search term
   const filteredQuizzes = Object.entries(quizSumScores).filter(([quizTitle]) =>
@@ -72,6 +68,22 @@ function Dashboard() {
   const indexOfFirstQuiz = indexOfLastQuiz - quizzesPerPage;
   const currentQuizzes = filteredQuizzes.slice(indexOfFirstQuiz, indexOfLastQuiz);
 
+  // Reset currentPage when searchTerm changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  // Adjust currentPage if necessary when filteredQuizzes changes
+  useEffect(() => {
+    if (filteredQuizzes.length < (currentPage - 1) * quizzesPerPage) {
+      setCurrentPage(1);
+    }
+  }, [filteredQuizzes, currentPage, quizzesPerPage]);
+
+  if (!userData) {
+    return <div className={styles.dashboard}>Loading...</div>;
+  }
+
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -80,6 +92,12 @@ function Dashboard() {
   for (let i = 1; i <= Math.ceil(filteredQuizzes.length / quizzesPerPage); i++) {
     pageNumbers.push(i);
   }
+
+  // Display a range of page numbers around the current page
+  const visiblePageNumbers = pageNumbers.slice(
+    Math.max(currentPage - 2, 0),
+    Math.min(currentPage + 2, pageNumbers.length)
+  );
 
   return (
     <div className={styles.dashboard}>
@@ -132,7 +150,17 @@ function Dashboard() {
         </table>
         {/* Pagination */}
         <ul className={styles.pagination}>
-          {pageNumbers.map((number) => (
+          {currentPage > 1 && (
+            <li className={styles['page-item']}>
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                className={styles['page-link']}
+              >
+                &laquo;
+              </button>
+            </li>
+          )}
+          {visiblePageNumbers.map((number) => (
             <li key={number} className={styles['page-item']}>
               <button
                 onClick={() => paginate(number)}
@@ -142,6 +170,16 @@ function Dashboard() {
               </button>
             </li>
           ))}
+          {currentPage < pageNumbers.length && (
+            <li className={styles['page-item']}>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                className={styles['page-link']}
+              >
+                &raquo;
+              </button>
+            </li>
+          )}
         </ul>
       </div>
       {loading && <div className={styles.loading}>Loading...</div>}

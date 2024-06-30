@@ -1,0 +1,267 @@
+.quizContainer {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px; /* Subtler roundness */
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+}
+
+.quizTitle {
+  font-size: 28px; /* Classic look */
+  margin-bottom: 20px; /* Compact appearance */
+  color: #333; /* Dark gray color */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px; /* Cleaner look */
+  padding: 10px; /* Better spacing */
+  border-bottom: 2px solid #333; /* Simple underline */
+  position: relative;
+  animation: titleAnimation 1s ease-out, bounceIn 1s ease-out; /* Title animation */
+}
+
+.questionContainer {
+  margin-bottom: 25px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px; /* Consistent with container */
+  padding: 20px;
+  background: #f9f9f9; /* Subtle background */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  position: relative;
+}
+
+.questionText {
+  font-size: 18px; /* Classic size */
+  margin-bottom: 15px;
+  color: #333;
+  text-align: left;
+  line-height: 1.5;
+  animation: fadeInText 1s ease-out; /* Fade-in text animation */
+}
+
+.optionsContainer {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px; /* Consistent with container */
+  padding: 15px; /* Cleaner look */
+  background: #ffffff; /* Plain background */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  animation: fadeIn 0.5s ease-out; /* Fade-in animation */
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Compact layout */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  padding: 10px 15px; /* Adjusted padding */
+  border-radius: 6px; /* Subtle roundness */
+  border: 1px solid #ddd;
+  position: relative;
+}
+
+.optionLabel:hover {
+  background-color: #f1f1f1; /* Hover effect */
+  border-color: #ccc;
+  transform: scale(1.03); /* Enlarge on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.optionLabel.selected {
+  background-color: #e0f7fa; /* Light cyan for selected */
+  border-color: #b2ebf2;
+  color: #00796b;
+  animation: selectAnimation 0.3s ease-out; /* Selection animation */
+}
+
+.optionInput {
+  margin-right: 10px; /* Adjusted spacing */
+  cursor: pointer;
+}
+
+.optionText {
+  font-size: 16px; /* Slightly smaller text */
+  color: #444;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.optionLabel.selected .optionText {
+  color: #00796b;
+}
+
+.timerText {
+  font-size: 14px; /* Slightly smaller font size */
+  color: #666;
+  margin-top: 10px;
+  animation: timerBlink 1s ease-in-out infinite; /* Blinking effect */
+}
+
+.startButton,
+.quizButton {
+  padding: 10px 20px; /* Adjusted padding */
+  background-color: #ff6347;
+  color: #fff;
+  border: none;
+  border-radius: 6px; /* Subtle roundness */
+  font-size: 16px; /* Adjusted font size */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  margin-top: 20px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+  position: relative;
+}
+
+.startButton:hover,
+.quizButton:hover {
+  background-color: #ff4500;
+  transform: scale(1.05); /* Enlarge on hover */
+  animation: buttonPulse 1s ease-in-out infinite; /* Pulsing effect */
+}
+
+.startButton:active,
+.quizButton:active {
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 40px; /* Adjusted size */
+  height: 40px;
+  border: 4px solid rgba(0, 123, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ff6347;
+  animation: loading-spin 1s infinite linear;
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes titleAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes selectAnimation {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes timerBlink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .quizContainer {
+    padding: 15px;
+  }
+
+  .quizTitle {
+    font-size: 24px; /* Slightly smaller on smaller screens */
+    margin-bottom: 15px;
+  }
+
+  .questionText {
+    font-size: 16px;
+  }
+
+  .optionText {
+    font-size: 14px;
+  }
+
+  .startButton,
+  .quizButton {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .quizTitle {
+    font-size: 20px; /* Further reduction for very small screens */
+    margin-bottom: 10px;
+  }
+
+  .questionText {
+    font-size: 14px;
+  }
+
+  .optionText {
+    font-size: 12px;
+  }
+
+  .startButton,
+  .quizButton {
+    font-size: 12px;
+  }
+}

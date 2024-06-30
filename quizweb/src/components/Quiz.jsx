@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { darcula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import MonacoEditor from '@monaco-editor/react';
 import UsernameModal from './UsernameModal';
-import '../css/Quiz.css'; // Import the CSS file for styling
+import styles from '../css/Quiz.module.css'; // Import the CSS file for styling
 
 function Quiz() {
   const { id } = useParams(); // Extracting quiz ID from URL params
@@ -122,55 +121,64 @@ function Quiz() {
 
   if (loading) {
     return (
-      <div className="quiz-container">
-        <div className="loading-spinner"></div>
+      <div className={styles.quizContainer}>
+        <div className={styles.loadingSpinner}></div>
         <p>Loading...</p>
       </div>
     );
   }
 
   if (!quizData) {
-    return <div className="quiz-container">Failed to load quiz. Please try again later.</div>;
+    return <div className={styles.quizContainer}>Failed to load quiz. Please try again later.</div>;
   }
 
+  const codeLanguage = quizData.questions[currentQuestionIndex].language.toLowerCase();
+
   return (
-    <div className="quiz-container">
-      <h2 className="quiz-title">{quizData.title}</h2>
+    <div className={styles.quizContainer}>
+      <h2 className={styles.quizTitle}>{quizData.title}</h2>
       {!quizStarted && (
-        <button onClick={startQuiz} className="start-button">
+        <button onClick={startQuiz} className={styles.startButton}>
           Start Quiz
         </button>
       )}
       {quizStarted && (
-        <div className="question-container">
-          <p className="question-text">
+        <div className={styles.questionContainer}>
+          <p className={styles.questionText}>
             <strong>Question {currentQuestionIndex + 1}:</strong>  {quizData.questions[currentQuestionIndex].question}
             
             {quizData.questions[currentQuestionIndex].inputType === 'code' ? (
-              <SyntaxHighlighter language={quizData.questions[currentQuestionIndex].language} style={darcula}>
-                {quizData.questions[currentQuestionIndex].codeSnippet}
-              </SyntaxHighlighter>
+              <MonacoEditor
+                height="130px" // Set height as needed
+                language={codeLanguage}
+                value={quizData.questions[currentQuestionIndex].codeSnippet}
+                theme="vs-dark" // Use built-in dark theme
+                options={{ readOnly: true, automaticLayout: true }}
+              />
             ) : (
               ""
             )}
           </p>
-          <div className="options-container">
+          <div className={styles.optionsContainer}>
             {quizData.questions[currentQuestionIndex].options.map((option, index) => (
-              <label key={index} className="option-label">
+              <label
+                key={index}
+                className={`${styles.optionLabel} ${selectedOption === index ? styles.selected : ''}`}
+              >
                 <input
                   type="radio"
                   name="option"
                   value={index}
                   checked={selectedOption === index}
                   onChange={handleOptionChange}
-                  className="option-input"
+                  className={styles.optionInput}
                 />
-                <span className="option-text">{option}</span>
+                <span className={styles.optionText}>{option}</span>
               </label>
             ))}
           </div>
-          <p className="timer-text">Time left: {timer} seconds</p>
-          <button onClick={handleNextQuestion} className="quiz-button">
+          <p className={styles.timerText}>Time left: {timer} seconds</p>
+          <button onClick={handleNextQuestion} className={styles.quizButton}>
             {currentQuestionIndex < quizData.questions.length - 1 ? 'Next' : 'Submit'}
           </button>
         </div>

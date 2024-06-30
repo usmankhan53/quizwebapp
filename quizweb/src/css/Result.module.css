@@ -1,0 +1,134 @@
+.resultContainer {
+  max-width: 600px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ffffff; /* Light background for consistency */
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+}
+
+.resultTitle {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+  animation: bounceIn 1s ease-out; /* Bounce-in animation */
+}
+
+.resultScore {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #555;
+  animation: fadeIn 1s ease-in; /* Fade-in animation */
+}
+
+.resultSummary {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+  animation: fadeIn 1s ease-in; /* Fade-in animation */
+}
+
+.backButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff6347; /* Consistent color theme */
+  color: #fff;
+  border: none;
+  border-radius: 6px; /* Rounded corners */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.backButton:hover {
+  background-color: #ff4500; /* Darker shade on hover */
+  transform: scale(1.05); /* Slight scale-up effect */
+}
+
+/* Progress Circle Styles */
+.progressCircle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #ff6347 calc(var(--progress) * 1%), 
+    #f0f0f0 0%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #333;
+  margin: 20px auto;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .resultContainer {
+    padding: 15px;
+  }
+  
+  .resultTitle {
+    font-size: 1.8rem;
+  }
+
+  .resultScore {
+    font-size: 1.3rem;
+  }
+
+  .resultSummary {
+    font-size: 1rem;
+  }
+
+  .backButton {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .resultTitle {
+    font-size: 1.5rem;
+  }
+
+  .resultScore {
+    font-size: 1.2rem;
+  }
+
+  .resultSummary {
+    font-size: 0.9rem;
+  }
+
+  .backButton {
+    font-size: 12px;
+  }
+}

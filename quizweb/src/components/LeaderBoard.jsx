@@ -62,16 +62,25 @@ function LeaderBoard() {
     }
   }, [leaderboardData]);
 
+  useEffect(() => {
+    const sortedData = searchTerm === ''
+      ? calculateRank(leaderboardData)
+      : calculateRank(leaderboardData.filter(user =>
+          user.username.toLowerCase().includes(searchTerm.toLowerCase())
+        ));
+    
+    setFilteredData(sortedData);
+    setCurrentPage(1); // Reset current page to 1 on search term change
+  }, [searchTerm, leaderboardData]);
+
+  useEffect(() => {
+    if (filteredData.length < (currentPage - 1) * usersPerPage) {
+      setCurrentPage(1); // Reset current page if the current page is out of range
+    }
+  }, [filteredData, currentPage, usersPerPage]);
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    if (event.target.value === '') {
-      setFilteredData(calculateRank(leaderboardData));
-    } else {
-      const filtered = leaderboardData.filter(user => 
-        user.username.toLowerCase().includes(event.target.value.toLowerCase())
-      );
-      setFilteredData(calculateRank(filtered));
-    }
   };
 
   // Pagination
@@ -84,6 +93,18 @@ function LeaderBoard() {
   if (loading) {
     return <div className={styles.loader}></div>;
   }
+
+  // Page numbers array for pagination
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredData.length / usersPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  // Display a range of page numbers around the current page
+  const visiblePageNumbers = pageNumbers.slice(
+    Math.max(currentPage - 2, 0),
+    Math.min(currentPage + 2, pageNumbers.length)
+  );
 
   return (
     <div className={styles.leaderboardContainer}>
@@ -120,18 +141,36 @@ function LeaderBoard() {
       </div>
       {/* Pagination */}
       <ul className={styles.pagination}>
-        {Array(Math.ceil(filteredData.length / usersPerPage))
-          .fill()
-          .map((_, index) => (
-            <li key={index} className={styles.pageItem}>
-              <button
-                onClick={() => paginate(index + 1)}
-                className={`${styles.pageLink} ${currentPage === index + 1 ? styles.active : ''}`}
-              >
-                {index + 1}
-              </button>
-            </li>
-          ))}
+        {currentPage > 1 && (
+          <li className={styles.pageItem}>
+            <button
+              onClick={() => paginate(currentPage - 1)}
+              className={styles.pageLink}
+            >
+              &laquo;
+            </button>
+          </li>
+        )}
+        {visiblePageNumbers.map((number) => (
+          <li key={number} className={styles.pageItem}>
+            <button
+              onClick={() => paginate(number)}
+              className={`${styles.pageLink} ${number === currentPage ? styles.active : ''}`}
+            >
+              {number}
+            </button>
+          </li>
+        ))}
+        {currentPage < pageNumbers.length && (
+          <li className={styles.pageItem}>
+            <button
+              onClick={() => paginate(currentPage + 1)}
+              className={styles.pageLink}
+            >
+              &raquo;
+            </button>
+          </li>
+        )}
       </ul>
     </div>
   );

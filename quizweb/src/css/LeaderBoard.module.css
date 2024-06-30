@@ -19,22 +19,24 @@
   border-radius: 4px;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
 }
 
 .pageLink:hover {
-  background-color: #dddddd7b;
+  background-color: #ddd; /* Lighten background on hover */
+  transform: scale(1.05); /* Slight scale-up effect */
 }
 
-.pageLink.active{
-  background-color: darkred;
+.pageLink.active {
+  background-color: #ff6347; /* Consistent color theme */
   color: white;
 }
 
 /* Loader Spinner */
 .loader {
-  border: 8px solid #f3f3f3; /* Light grey */
-  border-top: 8px solid darkred; 
+  border: 8px solid #f0f0f0; /* Light grey */
+  border-top: 8px solid #ff6347; /* Consistent color theme */
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -45,11 +47,6 @@
   justify-content: center;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 /* Leaderboard Container */
 .leaderboardContainer {
   width: 90%;
@@ -58,16 +55,20 @@
   padding: 20px;
   font-family: Arial, sans-serif;
   text-align: center; /* Center align content */
+  background-color: #ffffff; /* Light background for consistency */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 8px;
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
 }
 
 /* Leaderboard Table */
 .leaderboard {
   width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   overflow: hidden;
   margin-top: 20px; /* Add spacing between leaderboard and header */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 /* Leaderboard Header */
@@ -87,7 +88,7 @@
 /* Rows */
 .leaderboardRow {
   display: flex;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #ddd;
 }
 
 /* Remove top border from first row */
@@ -101,15 +102,22 @@
   max-width: 400px;
   padding: 10px;
   margin: 20px auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease; /* Smooth transition */
+}
+
+.searchBar:focus {
+  border-color: #ff6347; /* Highlight border on focus */
+  outline: none;
 }
 
 /* Current User Rank */
 .currentUserRank {
   margin-bottom: 20px;
   font-weight: bold;
-  color: #333;
+  color: #333; /* Darker text for better readability */
 }
 
 /* Buttons Container */
@@ -121,18 +129,38 @@
   margin: 0 10px;
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
-  background-color: darkred;
+  border-radius: 6px; /* Rounded corners */
+  background-color: #ff6347; /* Consistent color theme */
   color: white;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .navButton:hover {
-  background-color: rgba(139, 0, 0, 0.45);
+  background-color: #ff4500; /* Darker shade on hover */
+  transform: scale(1.05); /* Slight scale-up effect */
 }
 
-/* Responsive adjustments */
+/* Animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
 @media (max-width: 600px) {
   .leaderboard {
     margin: 10px auto; /* Adjust margin for better spacing */

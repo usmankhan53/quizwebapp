@@ -3,19 +3,21 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fff;
+  background-color: #ffffff; /* Light background for consistency */
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
 }
 
 .quiz-list-title {
-  font-size: 28px;
+  font-size: 2rem;
   margin-bottom: 20px;
   text-align: center;
-  color: white;
+  color: #333;
   padding: 10px;
   border-radius: 10px;
-  background-color: darkred;
+  background-color: #ff6347; /* Consistent color theme */
+  animation: bounceIn 1s ease-out; /* Bounce-in animation */
 }
 
 .search-bar {
@@ -37,7 +39,7 @@
 .search-input:focus,
 .category-select:focus {
   outline: none;
-  border-color: darkred;
+  border-color: #ff6347; /* Consistent color theme */
 }
 
 .category-select {
@@ -70,8 +72,8 @@
 
 .question-count {
   font-size: 14px;
-  color: white;
-  background-color: rgb(184, 68, 77);
+  color: #fff;
+  background-color: #ff6347; /* Consistent color theme */
   border-radius: 4px;
   padding: 2px 5px;
   position: absolute;
@@ -83,19 +85,21 @@
 .dashboard-link {
   display: inline-block;
   padding: 10px 20px;
-  background-color: darkred;
+  background-color: #ff6347; /* Consistent color theme */
   color: #fff;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 6px; /* Rounded corners */
   font-size: 16px;
   text-align: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .create-quiz-link:hover,
 .dashboard-link:hover {
-  background-color: rgba(139, 0, 0, 0.43);
+  background-color: #ff4500; /* Darker shade on hover */
+  transform: scale(1.05); /* Slight scale-up effect */
 }
 
 .loading-container {
@@ -111,7 +115,7 @@
   height: 20px;
   border-radius: 50%;
   border: 2px solid rgba(0, 123, 255, 0.3);
-  border-top-color: darkred;
+  border-top-color: #ff6347; /* Consistent color theme */
   animation: loading-spin 1s infinite linear;
 }
 
@@ -161,8 +165,25 @@
 }
 
 .page-link.active {
-  background-color: darkred;
+  background-color: #ff6347; /* Consistent color theme */
   color: white;
+}
+
+/* Progress Circle Styles */
+.progressCircle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #ff6347 calc(var(--progress) * 1%), 
+    #f0f0f0 0%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #333;
+  margin: 20px auto;
 }
 
 /* Responsive Styles */
@@ -199,5 +220,31 @@
     font-size: 12px; /* Adjust font size for small screens */
     top: 5px;
     right: 5px;
+  }
+}
+
+/* Keyframes for Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
   }
 }
