@@ -4,6 +4,7 @@
   justify-content: center;
   list-style: none;
   padding: 0;
+  margin-top: 20px; /* Add space above pagination */
 }
 
 .pageItem {
@@ -24,7 +25,7 @@
 }
 
 .pageLink:hover {
-  background-color: #ddd; /* Lighten background on hover */
+  background-color: #ccc; /* Slightly darker background on hover */
   transform: scale(1.05); /* Slight scale-up effect */
 }
 
@@ -59,7 +60,105 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   border-radius: 8px;
   animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+  position: relative; /* Required for positioning totalUsers */
 }
+
+/* Total Users Section */
+.totalUsers {
+  position: absolute; /* Absolute positioning to place it in the top-right */
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px; /* Add padding around the text */
+  border-radius: 12px; /* Rounded corners for a badge-like look */
+  background: linear-gradient(145deg, #ffffff, #f0f0f0); /* Gradient background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  font-size: 18px; /* Larger font size for emphasis */
+  font-weight: bold;
+  color: #333; /* Dark text for contrast */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the text and circle */
+  max-width: 90%; /* Limit width to prevent overflow on small screens */
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+/* Animated Circle */
+.totalUsers .statusCircle {
+  width: 14px; /* Slightly larger circle */
+  height: 14px; /* Slightly larger circle */
+  border-radius: 50%;
+  background-color: #ff6347; /* Consistent color theme */
+  margin-left: 6px; /* Space between count and circle */
+  animation: pulse 1.5s infinite; /* Pulse animation */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .totalUsers {
+    top: 15px; /* Adjust top position for medium screens */
+    right: 15px; /* Adjust right position for medium screens */
+    padding: 8px 16px; /* Reduce padding for medium screens */
+    font-size: 16px; /* Slightly smaller font size */
+  }
+
+  .totalUsers .statusCircle {
+    width: 12px; /* Slightly smaller circle */
+    height: 12px; /* Slightly smaller circle */
+    margin-left: 8px; /* Adjust space between count and circle */
+  }
+}
+
+@media (max-width: 900px) {
+  .totalUsers {
+    top: 10px; /* Further adjust top position for smaller screens */
+    right: 10px; /* Further adjust right position for smaller screens */
+    padding: 6px 12px; /* Reduce padding more for smaller screens */
+    font-size: 14px; /* Smaller font size */
+    max-width: 80%; /* Limit width further */
+  }
+
+  .totalUsers .statusCircle {
+    width: 10px; /* Smaller circle */
+    height: 10px; /* Smaller circle */
+    margin-left: 6px; /* Adjust space between count and circle */
+  }
+}
+
+@media (max-width: 600px) {
+  .totalUsers {
+    top: 5px; /* Adjust top position for very small screens */
+    right: 5px; /* Adjust right position for very small screens */
+    padding: 4px 8px; /* Minimal padding for very small screens */
+    font-size: 12px; /* Smaller font size */
+    max-width: 70%; /* Further limit width */
+    text-align: center; /* Center text for better readability */
+  }
+
+  .totalUsers .statusCircle {
+    width: 8px; /* Smaller circle */
+    height: 8px; /* Smaller circle */
+    margin-left: 4px; /* Adjust space between count and circle */
+  }
+}
+
+
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 
 /* Leaderboard Table */
 .leaderboard {
@@ -185,5 +284,9 @@
     margin: 5px;
     padding: 8px 16px; /* Adjust padding for buttons on smaller screens */
     font-size: 14px; /* Adjust font size for buttons on smaller screens */
+  }
+
+  .pagination {
+    margin-top: 10px; /* Adjust margin for pagination on smaller screens */
   }
 }

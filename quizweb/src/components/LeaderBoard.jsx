@@ -109,14 +109,18 @@ function LeaderBoard() {
   return (
     <div className={styles.leaderboardContainer}>
       <h2>Leaderboard</h2>
-      {currentUserRank && (
+      <div className={styles.totalUsers}>
+        Total Users: {leaderboardData.length}
+        <div className={styles.statusCircle}></div>
+      </div>
+      {currentUserRank !== null && (
         <div className={styles.currentUserRank}>
           Your Rank: {currentUserRank}
         </div>
       )}
       <div className={styles.buttonsContainer}>
-        <button onClick={() => navigate('/')} className={styles.navButton}>Go Home</button>
-        <button onClick={() => navigate('/dashboard')} className={styles.navButton}>Go Dashboard</button>
+        <button onClick={() => navigate('/')} className={styles.navButton} aria-label="Go Home">Go Home</button>
+        <button onClick={() => navigate('/dashboard')} className={styles.navButton} aria-label="Go Dashboard">Go Dashboard</button>
       </div>
       <input
         type="text"
@@ -124,6 +128,7 @@ function LeaderBoard() {
         value={searchTerm}
         onChange={handleSearch}
         className={styles.searchBar}
+        aria-label="Search by username"
       />
       <div className={styles.leaderboard}>
         <div className={styles.leaderboardHeader}>
@@ -140,12 +145,13 @@ function LeaderBoard() {
         ))}
       </div>
       {/* Pagination */}
-      <ul className={styles.pagination}>
+      <ul className={styles.pagination} aria-label="Pagination">
         {currentPage > 1 && (
           <li className={styles.pageItem}>
             <button
               onClick={() => paginate(currentPage - 1)}
               className={styles.pageLink}
+              aria-label="Previous Page"
             >
               &laquo;
             </button>
@@ -156,6 +162,7 @@ function LeaderBoard() {
             <button
               onClick={() => paginate(number)}
               className={`${styles.pageLink} ${number === currentPage ? styles.active : ''}`}
+              aria-label={`Page ${number}`}
             >
               {number}
             </button>
@@ -166,6 +173,7 @@ function LeaderBoard() {
             <button
               onClick={() => paginate(currentPage + 1)}
               className={styles.pageLink}
+              aria-label="Next Page"
             >
               &raquo;
             </button>
